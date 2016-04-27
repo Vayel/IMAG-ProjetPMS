@@ -102,7 +102,18 @@ $$
 
 Donc l'estimateur est sans biais.
 
-TODO : variance
+De plus :
+
+$$
+\begin{aligned}
+Var(\tilde{\theta}_n) &= Var(2\bar{X_n} - 1) \\
+                      &= 4 Var(\bar{X_n}) \\
+                      &= 4 Var(\frac{1}{n} \sum_{i=1}^{n} X_i) \\
+                      &= \frac{4}{n^2} \sum_{i=1}^{n} Var(X_i) \ \text{par indépendance} \\
+                      &= \frac{4}{n} Var(X) \\
+                      &= \frac{4 (\theta^2 - 1)}{12n}
+\end{aligned}
+$$
 
 \vspace{2mm}
 
@@ -253,12 +264,12 @@ approximativement une droite, de pente $1/\theta_g$.
 
 \vspace{4mm}
 
-\noi On peut en fait montrer que l'estimateur sans biais et de variance minimale de $\theta$ est :
+\noi \textit{On peut en fait montrer que l'estimateur sans biais et de variance minimale de $\theta$ est :}
 $$\check{\theta}_n = \frac{{X_n^*}^{n+1} - (X_n^*-1)^{n+1}}{{X_n^*}^{n} - (X_n^*-1)^{n}}.$$
 
 \vspace{2mm}
 
-Dans la suite de cette première partie, on va comparer numériquement les 5 estimateurs $\tilde{\theta}_n, \tilde{\theta}'_n, \hat{\theta}_n$, $\theta_g$ et $\check{\theta}_n$ à l'aide de simulations en ${\tt R}$.
+\textit{Dans la suite de cette première partie, on va comparer numériquement les 5 estimateurs $\tilde{\theta}_n, \tilde{\theta}'_n, \hat{\theta}_n$, $\theta_g$ et $\check{\theta}_n$ à l'aide de simulations en ${\tt R}$.}
 
 \vspace{2mm}
 

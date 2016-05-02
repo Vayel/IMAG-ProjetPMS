@@ -1,6 +1,6 @@
 \documentclass[12pt]{article}
 
-\usepackage{amsfonts, amsmath, amssymb, amstext, latexsym}
+\usepackage{amsfonts, amsmath, amssymb, amstext, latexsym, dsfont}
 \usepackage{graphicx, epsfig}
 \usepackage[latin1]{inputenc}
 \usepackage[french]{babel}
@@ -8,6 +8,7 @@
 \usepackage{amsbsy}
 \usepackage{amsopn}
 \usepackage{fancyhdr}
+\usepackage{relsize}
 
 \newcommand{\noi}{\noindent}
 \newcommand{\dsp}{\displaystyle}
@@ -300,20 +301,108 @@ Dans le problème des chars allemands, un tank n'est capturé qu'une seule fois. C
 
 \begin{enumerate}
 
-\item Déterminer la loi de $X_1$, puis celle de $X_2$ sachant $[X_1 = x_1]$, puis celle de $X_3$ sachant $[X_1 = x_1, X_2=x_2]$, etc... Etant donné que la fonction de vraisemblance peut s'écrire 
+    \item\textit{Déterminer la loi de $X_1$, puis celle de $X_2$ sachant $[X_1 = x_1]$, puis celle de $X_3$ sachant $[X_1 = x_1, X_2=x_2]$, etc... Etant donné que la fonction de vraisemblance peut s'écrire }
 \begin{eqnarray*}
 {\cal L}(\theta ; x_1, \ldots, x_n) &=& P(X_1 = x_1, \ldots X_n=x_n ; \theta) \\
 &=& P(X_1 = x_1 ; \theta) \prod_{i=2}^n P(X_i = x_i | X_1 = x_1, \ldots X_{i-1}=x_{i-1} ; \theta),
 \end{eqnarray*}
-\noi montrer que l'estimateur de maximum de vraisemblance de $\theta$ est toujours $\hat{\theta}_n=X_n^*$.
+\noi\textit{montrer que l'estimateur de maximum de vraisemblance de $\theta$ est toujours $\hat{\theta}_n=X_n^*$.}
+%---- Answer 1 ----%
+\\\\
+On a:\\$$
+\begin{aligned}
+    &P(X_{1} = x_{1})=\frac{1}{\theta}\mathlarger{\mathlarger{\mathlarger{\mathds{1}}}_{[0;\theta]}}(x_1)\\
+    &P(X_{2} = x_{2}|X_{1}=x_{1})=\frac{1}{\theta-1}\mathlarger{\mathlarger{\mathlarger{\mathds{1}}}_{[0;\theta]}}(x_2)\\
+    &P(X_{i} = x_{i}|\bigcap_{j=1}^{i-1})=\frac{1}{\theta-i+1}\mathlarger{\mathlarger{\mathlarger{\mathds{1}}}_{[0;\theta]}}(x_i)\\
+\end{aligned}
+$$
+
+La fonction de vraisemblance s'écrit donc:\\
+$$\begin{aligned}
+    {\cal L}(\theta;(x_1,\ldots,x_n)) 
+    &= P(X_1=x_1)\prod_{i=2}^{n}P(X_i=x_i|\bigcap_{j=1}^{i-1}X_{j}=x_{j})\\                                  
+    &= \frac{1}{\theta}\prod_{i=2}^{n}\frac{1}{\theta-i+1}\mathlarger{\mathlarger{\mathlarger{\mathds{1}}}_{[0;\theta]}}(x_i)\\
+  &=\prod_{i=0}^{n-1}\frac{1}{\theta-i}\mathlarger{\mathlarger{\mathlarger{\mathds{1}}}}_{[1;\theta]}(\max_{0 \leq j \leq \theta}(x_i))\\
+  &=\frac{1}{(\theta-n)!}\mathlarger{\mathlarger{\mathlarger{\mathds{1}}}}_{[1;\theta]}(\max_{0 \leq j \leq \theta}(x_i))\\\\
+\end{aligned}$$
+Donc, le $\hat{\theta}$ qui maximise $ {\cal L}(\theta;(x_1,\ldots,x_n)) $ est $\hat{\theta}_n=X_n^*$ puisque c'est le plus petit $\hat{\theta}$ qui permet à l'indicatrice de valoir 1.\\
+
+%----  EOA 1   ----%
 
 \vspace{2mm}
 
-\item Montrer que $\forall k \in \{n,\ldots,\theta\}$, $P(X_n^*=k) = {\dsp \frac{\left(_{n-1}^{k-1} \right)}{\left(_{n}^{\theta} \right)}}$. Calculer $E[X_n^*]$ et en déduire que $\hat{\theta}_n^{(1)}={\dsp \frac{n+1}{n}X_n^*-1}$ est estimateur sans biais de $\theta$.
+\item\textit{Montrer que $\forall k \in \{n,\ldots,\theta\}$, $P(X_n^*=k) = {\dsp \frac{\left(_{n-1}^{k-1} \right)}{\left(_{n}^{\theta} \right)}}$. Calculer $E[X_n^*]$ et en déduire que $\hat{\theta}_n^{(1)}={\dsp \frac{n+1}{n}X_n^*-1}$ est estimateur sans biais de $\theta$.}\\
 
+%---- Answer 2 ----%
+
+{\large A)}
+$$\begin{aligned}
+    P(X_n^*=k) = P(X_n^*\leq k) P(X_n^*\leq k-1)\\
+\end{aligned}$$
+Or, par la formule des probabilités composées.\\
+$$\begin{aligned}
+    P(X_n^* \leq k) &= P(\bigcap_{i=1}^{n}X_i \leq k)\\
+                    &= P(X_1 \leq k)\prod_{i=2}^{n}P(X_{i}\leq k|\bigcap_{j=1}^{i-1}X_{j} \leq k)\\
+                    &= \frac{k}{\theta}\prod_{i=2}^{n}\frac{k-i+1}{\theta-i+1}=\prod_{i=0}^{n-1}\frac{k-i}{\theta-i}\\
+\end{aligned}$$
+Nous avons ainsi:\\
+$$\begin{aligned}
+    &\prod_{i=0}^{n-1}k-i=\frac{k!}{(k-n+1-1)!}=\frac{k!}{(k-n)!}\\
+    &\prod_{i=0}^{n-1}\theta-i=\frac{\theta!}{(\theta-n+1-1)!}=\frac{\theta!}{(\theta-n)!}\\
+\end{aligned}$$
+Donc,
+$$\begin{aligned}
+    P(X_n^* \leq k) 
+    &=\mathlarger{\mathlarger{\frac{\frac{k!}{(k-n)!}}{\frac{\theta!}{(\theta-n)!}}}}\\\\
+    &=\mathlarger{\mathlarger{\frac{\frac{k!}{n!(k-n)!}}{\frac{\theta!}{n!(\theta-n)!}}}}=\mathlarger{\mathlarger{{\dsp \frac{\left(_{n}^{k} \right)}{\left(_{n}^{\theta} \right)}}}}\\
+\end{aligned}$$
+On a donc finalement,
+$$\begin{aligned}
+    P(X_n^*=k) &= P(X_n^*\leq k) P(X_n^*\leq k-1)\\\\
+               &=\mathlarger{\mathlarger{{\dsp \frac{\left(_{n}^{k} \right)}{\left(_{n}^{\theta} \right)}} - {\dsp \frac{\left(_{n}^{k-1} \right)}{\left(_{n}^{\theta} \right)}}}}=\mathlarger{\mathlarger{{\dsp \frac{\left(_{n-1}^{k-1} \right)}{\left(_{n}^{\theta} \right)}}}}\\
+\end{aligned}$$
+Car,
+$$\begin{aligned}
+    \mathlarger{\mathlarger{{\dsp \left(_{n}^{k} \right)}}}-\mathlarger{\mathlarger{{\dsp \left(_{n}^{k-1} \right)}}}
+    &=\frac{k!-(k-1)!(k-n)}{n!(k-n)!}\\
+    &=\frac{k!-(k-1)!k+(k-1)!n}{n!(k-n)!}\\
+    &=\frac{(k-1)!}{(n-1)!(k-n)!}=\mathlarger{\mathlarger{{\dsp \left(_{n-1}^{k-1} \right)}}}\\
+\end{aligned}$$
+{\large B)}
+$$\begin{aligned}
+    E[X_n^*]&=\sum_{k=n}^{\theta}\frac{k(k-1)!n!(\theta-n)!}{(n-1)!(k-n)!\theta!}\\
+            &=\frac{n!(\theta-n)!}{\theta!}\sum_{k=n}^{\theta}\frac{nk!}{(k-n)!n!}\\
+            &=\frac{n!(\theta-n)!}{\theta!}n\sum_{k=n}^{\theta}\mathlarger{\mathlarger{{\dsp \left(_{k-n}^{k} \right)}}}\\
+\end{aligned}$$
+Or,
+$$\begin{aligned}
+    \sum_{k=n}^{\theta}\mathlarger{\mathlarger{{\dsp \left(_{k-n}^{k} \right)}}}=\sum_{i=0}^{\theta-n}\mathlarger{\mathlarger{{\dsp \left(_{i}^{n+1} \right)}}}=\mathlarger{\mathlarger{{\dsp \left(_{\theta-1}^{\theta+1} \right)}}}
+\end{aligned}$$
+Donc,
+$$\begin{aligned}
+    E[X_n^*]&=\frac{n!(\theta-n)!}{\theta!}n\mathlarger{\mathlarger{{\dsp \left(_{\theta-1}^{\theta+1} \right)}}}\\
+            &=\frac{n!(\theta-n)!n(\theta+1)!}{\theta!(\theta-n)!(n+1)!}\\
+            &=\frac{n!n(\theta+1)!}{\theta!(n+1)!}=n\frac{\theta+1}{n+1}\\
+\end{aligned}$$
+Si $\hat\theta_{n}^{(1)}$ est un estimateur sans biais alors on a: $E[\hat\theta_{n}^{(1)}]=\theta$. D'où,
+$$\begin{aligned}
+    &E[X_{n}^{*}]=n\frac{\theta+1}{n+1}\\
+    &(n+1)\frac{E[X_{n}^{*}]}{n}-1=\theta\\
+\end{aligned}$$
+Et puisque:
+$$\begin{aligned}
+    (n+1)\frac{E[X_{n}^{*}]}{n}-1=E[\frac{n+1}{n}X_{n}^{*}-1]=\theta\\
+\end{aligned}$$
+On a bien l'estimateur sans biais $\hat\theta_{n}^{(1)}=E[\frac{n+1}{n}X_{n}^{*}-1]$.
+
+%----  EOA 2   ----%
 \vspace{2mm}
 
-\item Une façon intuitive de construire un autre estimateur est la suivante. Pour des raisons de symétrie, il est logique de s'attendre à ce que le nombre de numéros inférieurs au minimum des numéros tirés soit proche du nombre de numéros supérieurs au maximum des numéros tirés. Autrement dit, $x_1^* -1 \approx \theta - x_n^*$. Cela amène à proposer un nouvel estimateur, $\hat{\theta}_n^{(2)}=X_n^*+X_1^*-1$.
+\item\textit{Une façon intuitive de construire un autre estimateur est la suivante. Pour des raisons de symétrie, il est logique de s'attendre à ce que le nombre de numéros inférieurs au minimum des numéros tirés soit proche du nombre de numéros supérieurs au maximum des numéros tirés. Autrement dit, $x_1^* -1 \approx \theta - x_n^*$. Cela amène à proposer un nouvel estimateur, $\hat{\theta}_n^{(2)}=X_n^*+X_1^*-1$.}\\
+
+%---- Answer 3 ----%
+Je n'ai rien à répondre là-dessus si ?\\
+%----  EOA 3   ----%
 
 \vspace{2mm}
 

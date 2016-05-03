@@ -106,3 +106,49 @@ question8 <- function() {
 }
 
 question8()
+
+#
+# 1.10
+#
+
+is_in_conf_int <- function(theta, n, alpha) {
+  x = sample(1:theta, n, replace=T)
+  ualpha = qnorm(1 - alpha/2)
+  theta_tilde = get_estimates(x)$theta_mean
+  
+  a = 3 * n^2 - ualpha^2
+  b = 6 * n^2 * theta_tilde
+  delta = -4 * (3 * n^2 * ualpha^2 * (1 - theta_tilde^2) - ualpha^4)
+  
+  return((b - sqrt(delta))/(2 * a) <= theta && theta <= (b + sqrt(delta))/(2 * a))
+}
+
+question10 <- function() {
+  theta = 1000
+  n_vals = c(10, 100, 1000)
+  m_vals = c(10, 50, 100)
+  alpha_vals = c(0.1, 0.05, 0.01)
+  
+  freqs = vector(length=length(m_vals))
+  
+  for(alpha in alpha_vals) {
+    for(n in n_vals) {
+      for(m_index in 1:length(m_vals)) {
+        m = m_vals[m_index]
+        nb_in = 0
+        
+        for(i in 1:m) {
+          if(is_in_conf_int(theta, n, alpha)) {
+            nb_in = nb_in + 1
+          }
+        }
+        freqs[m_index] = nb_in/m * 100
+      }
+      
+      plot(m_vals, freqs)
+      title(main=paste('alpha=', toString(alpha), ' ; n=', toString(n)))
+    }
+  }
+}
+
+question10()

@@ -96,6 +96,7 @@ E(\tilde{\theta}_n) &= E(2\bar{X_n} - 1) \\
                     &= 2 E(\bar{X_n}) - 1 \\
                     &= 2 E(\frac{1}{n} \sum_{i=1}^{n} X_i) - 1 \\
                     &= 2 \frac{1}{n} \sum_{i=1}^{n} E(X_i) - 1 \\
+                    &= 2 \frac{1}{n} \sum_{i=1}^{n} \frac{\theta + 1}{2} - 1 \\
                     &= \theta \\
                     &= E(X)
 \end{aligned}
@@ -284,8 +285,55 @@ $$\check{\theta}_n = \frac{{X_n^*}^{n+1} - (X_n^*-1)^{n+1}}{{X_n^*}^{n} - (X_n^*
 
 \vspace{2mm}
 
-\item Déterminer un intervalle de confiance asymptotique de seuil $\alpha$ pour $\theta$, c'est-à-dire un intervalle aléatoire $I_n$ tel que 
+\item \textit{Déterminer un intervalle de confiance asymptotique de seuil $\alpha$ pour $\theta$, c'est-à-dire un intervalle aléatoire $I_n$ tel que}
 $$\lim_{n \rightarrow \infty} P(\theta \in I_n)=1-\alpha.$$
+
+Le théorème central-limite nous dit que, asymptotiquement, $\bar{X_n}$ suit
+une loi normale $\mathcal{N}(E[X], Var[X]/n)$.
+
+Donc $\tilde{\theta}_n$ suit une loi normale $\mathcal{N}(\theta, \frac{4(\theta^2 - 1)}{12n})$.
+
+Alors on a une confiance $1 - \alpha$ en l'inégalité suivante :
+
+$$
+(E) \ \tilde{\theta}_n - \frac{2 \sqrt{\theta^2 - 1}}{\sqrt{12n^2}} u_{\alpha} \leq \theta \leq \tilde{\theta}_n + \frac{2 \sqrt{\theta^2 - 1}}{\sqrt{12n^2}} u_{\alpha}
+$$
+
+Or
+
+$$
+\begin{aligned}
+  (E) \ &\Leftrightarrow - \frac{2 \sqrt{\theta^2 - 1}}{\sqrt{12n^2}} u_{\alpha} \leq \theta - \tilde{\theta}_n \leq \frac{2 \sqrt{\theta^2 - 1}}{\sqrt{12n^2}} u_{\alpha} \\
+      &\Leftrightarrow (\theta - \tilde{\theta}_n)^2 \leq \frac{\theta^2 - 1}{3n^2} u_{\alpha}^2 \\
+      &\Leftrightarrow \theta^2 - 2 \tilde{\theta}_n \theta + \tilde{\theta}_n^2 \leq \frac{\theta^2 - 1}{3n^2} u_{\alpha}^2 \\
+      &\Leftrightarrow 3n^2 \theta^2 - 6 n^2 \tilde{\theta}_n \theta + 3n^2 \tilde{\theta}_n^2 \leq (\theta^2 - 1) u_{\alpha}^2 \\
+      &\Leftrightarrow (3n^2 - u_{\alpha}^2) \theta^2 - (6 n^2 \tilde{\theta}_n) \theta  + (3n^2 \tilde{\theta}_n^2 + u_{\alpha}^2) \leq 0
+\end{aligned}
+$$
+
+Notons $\Delta$ le discriminant. On a :
+
+$$
+\begin{aligned}
+  \Delta &= (6 n^2 \tilde{\theta}_n)^2 - 4 (3n^2 - u_{\alpha}^2) (3n^2 \tilde{\theta}_n^2 + u_{\alpha}^2) \\
+         &= 36 n^4 \tilde{\theta}_n^2 - 4 [9 n^4 \tilde{\theta}_n^2 + 3n^2 u_{\alpha}^2 - u_{\alpha}^2 3n^2 \tilde{\theta}_n^2 - u_{\alpha}^4] \\
+         &= -4 [-9 n^4 \tilde{\theta}_n^2 + 9 n^4 \tilde{\theta}_n^2 + 3n^2 u_{\alpha}^2 - u_{\alpha}^2 3n^2 \tilde{\theta}_n^2 - u_{\alpha}^4] \\
+         &= -4 [3n^2 u_{\alpha}^2(1 - \tilde{\theta}_n^2) - u_{\alpha}^4] \\
+         &> 0 \ \text{car} \ \tilde{\theta}_n \geq 1 \ \text{et} \ u_{\alpha} > 0 \\
+\end{aligned}
+$$
+
+Le polynôme admet donc deux racines et, comme $(3n^2 - u_{\alpha}^2) > 0$ (on
+étudie le comportement asymptotique), l'inégalité est vérifiée entre les deux
+racines. Un intervalle de confiance au seuil $1 - \alpha$ pour $\theta$ est donc :
+
+$$
+\left[ 
+  \frac{6 n^2 \tilde{\theta}_n - \sqrt{-4 [3n^2 u_{\alpha}^2(1 - \tilde{\theta}_n^2) - u_{\alpha}^4]}}{2(3n^2 - u_{\alpha}^2)}
+  ,
+  \frac{6 n^2 \tilde{\theta}_n + \sqrt{-4 [3n^2 u_{\alpha}^2(1 - \tilde{\theta}_n^2) - u_{\alpha}^4]}}{2(3n^2 - u_{\alpha}^2)}
+\right]
+$$
 
 \vspace{2mm}
 

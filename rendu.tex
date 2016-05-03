@@ -285,8 +285,28 @@ $$\check{\theta}_n = \frac{{X_n^*}^{n+1} - (X_n^*-1)^{n+1}}{{X_n^*}^{n} - (X_n^*
 
 \vspace{2mm}
 
-\item Déterminer un intervalle de confiance asymptotique de seuil $\alpha$ pour $\theta$, c'est-à-dire un intervalle aléatoire $I_n$ tel que 
+\item \textit{Déterminer un intervalle de confiance asymptotique de seuil $\alpha$ pour $\theta$, c'est-à-dire un intervalle aléatoire $I_n$ tel que}
 $$\lim_{n \rightarrow \infty} P(\theta \in I_n)=1-\alpha.$$
+
+Le théorème central-limite nous dit que, asymptotiquement, $\bar{X_n}$ suit
+une loi normale $\mathcal{N}(E[X], Var[X]/n)$.
+
+Donc $\tilde{\theta}_n$ suit une loi normale $\mathcal{N}(\theta, 4(\theta^2 - 1)/12n)$.
+
+Alors on a une confiance $1 - \alpha$ en l'inégalité suivante :
+
+$$
+(E) \bar{X}_n - \frac{2 \sqrt{\theta^2 - 1}}{\sqrt{12n^2}} u_{\alpha} \leq \theta \leq \bar{X}_n + \frac{2 \sqrt{\theta^2 - 1}}{\sqrt{12n^2}} u_{\alpha}
+$$
+
+Or
+
+$$
+\begin{aligned}
+  (E) \ &\Leftrightarrow  - \frac{2 \sqrt{\theta^2 - 1}}{\sqrt{12n^2}} u_{\alpha} \leq \theta - \bar{X}_n \leq \frac{2 \sqrt{\theta^2 - 1}}{\sqrt{12n^2}} u_{\alpha} \\
+      &\Leftrightarrow  (\theta - \bar{X}_n)^2 \leq \frac{4 \theta^2 - 4}{12n^2} u_{\alpha} \\
+\end{aligned}
+$$
 
 \vspace{2mm}
 

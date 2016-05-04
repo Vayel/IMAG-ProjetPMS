@@ -3,7 +3,7 @@
 #
 
 # Histogramme
-draw_hist <- function(x) {
+draw_hist <- function(x, ttl) {
   n = length(x)
   k = floor(1 + log2(n))
   x1_star = min(x)
@@ -11,7 +11,7 @@ draw_hist <- function(x) {
   a0 = floor(x1_star - 0.025 * (xn_star - x1_star))
   ak = ceiling(xn_star + 0.025 * (xn_star - x1_star))
   h = (ak - a0)/k
-  hist(x, prob=T, breaks=seq(a0, ak, h))
+  hist(x, prob=T, breaks=seq(a0, ak, h), main=ttl, xlab='Observations', ylab='Densité')
 }
 
 # Estimations
@@ -35,10 +35,11 @@ question7 <- function() {
   n = 20
   x = sample(1:theta, n, replace=T)
   
-  draw_hist(x)
+  draw_hist(x, 'Histogramme de U{1, ..., 1000}')
   
   # Graphe de probabilite
-  plot(sort(x)[1:n], seq(1:n)/n, ylim=c(0, 1))
+  plot(sort(x)[1:n], seq(1:n)/n, ylim=c(0, 1), main='Graphe de probabilité', xlab='Observations', ylab='i/n')
+  title()
   
   estimates = get_estimates(x)
 }
@@ -50,40 +51,25 @@ question7()
 #
 
 bias_error_estimators <- function(n, m, theta) {
-  biases = list(
-    theta_mean = 0,
-    theta_med = 0,
-    theta_max = 0,
-    theta_graph = 0,
-    theta_best = 0
-  )
-  variances = list(
-    theta_mean = 0,
-    theta_med = 0,
-    theta_max = 0,
-    theta_graph = 0,
-    theta_best = 0
-  )
-  errors = list(
-    theta_mean = 0,
-    theta_med = 0,
-    theta_max = 0,
-    theta_graph = 0,
-    theta_best = 0
-  )
+  estimates = matrix(nrow = 5, ncol = m)
+  biases = c(0, 0, 0, 0, 0)
+  errors = c(0, 0, 0, 0, 0)
   
   for(i in 1:m) {
     x = sample(1:theta, n, replace=T)
-    estimates = get_estimates(x)
+    es = get_estimates(x)
     
-    for(name in names(biases)) {
-      biases[[name]] = biases[[name]] + (estimates[[name]] - theta)/m
-    }
+    estimates[1, i] = es$theta_mean
+    estimates[2, i] = es$theta_med
+    estimates[3, i] = es$theta_max
+    estimates[4, i] = es$theta_graph
+    estimates[5, i] = es$theta_best
   }
   
-  for(name in names(errors)) {
+  for(i in 1:5) {
+    biases[i] = mean(estimates[i,]) - theta
     # EQM = variance + biais^2
-    errors[[name]] = variances[[name]] + biases[[name]]^2
+    errors[i] = var(estimates[i,]) + biases[i]^2
   }
   
   res = list(
@@ -94,14 +80,24 @@ bias_error_estimators <- function(n, m, theta) {
 }
 
 question8 <- function() {
-  m_vals = c(2, 5, 10)
-  n_vals = c(10, 20, 40)
+  colors = c('red', 'green', 'blue')
+  m_vals = c(10, 100, 1000)
+  n_vals = c(10, 100, 1000)
   theta = 1000
-  n = 10
   
-  for(m in m_vals) {
-    measures = bias_error_estimators(n, m, theta)
-    plot(m, measures$biases$theta_mean)
+  for(n in n_vals) {
+    plot(m_vals, c(0,0,0,0,0), type="l", col="yellow")
+    title(main='n = ' + toString(n))
+    
+    for(i in 1:length(m_vals)) {
+      m = m_vals[i]
+      mes = bias_error_estimators(n, m, theta)
+      
+      biases = mes$biases
+      errors = mes$errors
+      
+      points(m, biases)
+    }
   }
 }
 
@@ -125,8 +121,8 @@ is_in_conf_int <- function(theta, n, alpha) {
 
 question10 <- function() {
   theta = 1000
-  n_vals = c(10, 100, 1000)
-  m_vals = c(10, 50, 100)
+  n_vals = c(10000)
+  m_vals = seq(1, 1100, 100)
   alpha_vals = c(0.1, 0.05, 0.01)
   
   freqs = vector(length=length(m_vals))

@@ -9,6 +9,8 @@
 \usepackage{amsopn}
 \usepackage{fancyhdr}
 \usepackage{relsize}
+\usepackage{graphicx}
+\usepackage{mathabx}
 
 \newcommand{\noi}{\noindent}
 \newcommand{\dsp}{\displaystyle}
@@ -279,6 +281,37 @@ $$\check{\theta}_n = \frac{{X_n^*}^{n+1} - (X_n^*-1)^{n+1}}{{X_n^*}^{n} - (X_n^*
 
   Simuler un échantillon de taille $n=20$ d'une loi ${\cal U}_{\{1,\ldots,\theta\}}$, avec $\theta=1000$. Tracer un histogramme et le graphe de probabilités pour la loi uniforme discrète. Calculez les 5 estimations de $\theta$. Commentez les résultats.
 
+\begin{figure}[!h]
+  \includegraphics[scale=0.7]{hist.pdf}
+  \includegraphics[scale=0.7]{graphe_proba.pdf}
+\end{figure}
+
+L'histogramme correspond bien à une distribution uniforme puisque les classes, de
+même largeur, ont des densités similaires.
+
+Comme les points du graphe de probabilité sont globalement alignés, on retrouve
+le fait que les observations proviennent d'une loi uniforme.
+
+Les différents estimateurs donnent les valeurs suivantes :
+
+\begin{center}
+\begin{tabular}{|c|c|}
+  \hline
+  Estimateur & Valeur \\
+  \hline
+  $\tilde{\theta}$ & 940.9 \\
+  \hline
+  $\tilde{\theta}'$ & 865 \\
+  \hline
+  $\hat{\theta}$ & 990 \\
+  \hline
+  $\theta_g$ & 1128 \\
+  \hline
+  $\widecheck{\theta}$ & 1039 \\
+  \hline
+\end{tabular}
+\end{center}
+
 \vspace{2mm}
 
 \item Simuler $m$ échantillons de taille $n$ d'une loi ${\cal U}_{\{1,\ldots,\theta\}}$, avec $\theta=1000$. Pour chaque échantillon, calculer les valeurs des 5 estimations de $\theta$. On obtient ainsi des échantillons de $m$ valeurs de chacun des 5 estimateurs. Evaluer le biais et l'erreur quadratique moyenne de ces estimateurs. Faites varier $m$ et $n$. Qu'en concluez-vous ?
@@ -324,7 +357,7 @@ $$
 $$
 
 Le polynôme admet donc deux racines et, comme $(3n^2 - u_{\alpha}^2) > 0$ (on
-étudie le comportement asymptotique), l'inégalité est vérifiée entre les deux
+étudie le comportement asymptotique), (E) est vérifiée entre les deux
 racines. Un intervalle de confiance au seuil $1 - \alpha$ pour $\theta$ est donc :
 
 $$
@@ -337,7 +370,9 @@ $$
 
 \vspace{2mm}
 
-\item Simuler $m$ échantillons de taille $n$ d'une loi ${\cal U}_{\{1,\ldots,\theta\}}$. Calculer le pourcentage de fois où l'intervalle de confiance de seuil $\alpha$ pour $\theta$ contient la vraie valeur du paramètre $\theta$. Faire varier $n$, $m$ et $\alpha$, et conclure. 
+\item \textit{Simuler $m$ échantillons de taille $n$ d'une loi ${\cal U}_{\{1,\ldots,\theta\}}$. Calculer le pourcentage de fois où l'intervalle de confiance de seuil $\alpha$ pour $\theta$ contient la vraie valeur du paramètre $\theta$. Faire varier $n$, $m$ et $\alpha$, et conclure.}
+
+On obtient des résultats incohérents.
 
 \end{enumerate}
 

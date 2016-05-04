@@ -405,7 +405,7 @@ $$\begin{aligned}
     &= P(X_1=x_1)\prod_{i=2}^{n}P(X_i=x_i|\bigcap_{j=1}^{i-1}X_{j}=x_{j})\\                                  
     &= \frac{1}{\theta}\prod_{i=2}^{n}\frac{1}{\theta-i+1}\mathlarger{\mathlarger{\mathlarger{\mathds{1}}}_{[0;\theta]}}(x_i)\\
   &=\prod_{i=0}^{n-1}\frac{1}{\theta-i}\mathlarger{\mathlarger{\mathlarger{\mathds{1}}}}_{[1;\theta]}(\max_{0 \leq j \leq \theta}(x_i))\\
-  &=\frac{1}{(\theta-n)!}\mathlarger{\mathlarger{\mathlarger{\mathds{1}}}}_{[1;\theta]}(\max_{0 \leq j \leq \theta}(x_i))\\\\
+  &=\frac{(\theta-n)!}{\theta!}\mathlarger{\mathlarger{\mathlarger{\mathds{1}}}}_{[1;\theta]}(\max_{0 \leq j \leq \theta}(x_i))\\\\
 \end{aligned}$$
 Donc, le $\hat{\theta}$ qui maximise $ {\cal L}(\theta;(x_1,\ldots,x_n)) $ est $\hat{\theta}_n=X_n^*$ puisque c'est le plus petit $\hat{\theta}$ qui permet à l'indicatrice de valoir 1.\\
 
@@ -475,7 +475,7 @@ Et puisque:
 $$\begin{aligned}
     (n+1)\frac{E[X_{n}^{*}]}{n}-1=E[\frac{n+1}{n}X_{n}^{*}-1]=\theta\\
 \end{aligned}$$
-On a bien l'estimateur sans biais $\hat\theta_{n}^{(1)}=E[\frac{n+1}{n}X_{n}^{*}-1]$.
+On a bien l'estimateur sans biais $\hat\theta_{n}^{(1)}=\frac{n+1}{n}X_{n}^{*}-1$.
 
 %----  EOA 2   ----%
 \vspace{2mm}
@@ -483,7 +483,7 @@ On a bien l'estimateur sans biais $\hat\theta_{n}^{(1)}=E[\frac{n+1}{n}X_{n}^{*}
 \item\textit{Une façon intuitive de construire un autre estimateur est la suivante. Pour des raisons de symétrie, il est logique de s'attendre à ce que le nombre de numéros inférieurs au minimum des numéros tirés soit proche du nombre de numéros supérieurs au maximum des numéros tirés. Autrement dit, $x_1^* -1 \approx \theta - x_n^*$. Cela amène à proposer un nouvel estimateur, $\hat{\theta}_n^{(2)}=X_n^*+X_1^*-1$.}\\
 
 %---- Answer 3 ----%
-Je n'ai rien à répondre là-dessus si ?\\
+% Rien à répondre.
 %----  EOA 3   ----%
 
 \vspace{2mm}
